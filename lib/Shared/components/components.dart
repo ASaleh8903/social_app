@@ -1,13 +1,10 @@
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../layout/shop_app/cubit/cubit.dart';
 import '../cubit/cubit/app_cubit.dart';
 import '../styles/colors.dart';
-
 
 Widget defaultButton({
   double width = double.infinity,
@@ -21,8 +18,8 @@ Widget defaultButton({
       width: width,
       height: 50.0,
       child: MaterialButton(
-        onPressed: (){
-         function();
+        onPressed: () {
+          function();
         },
         child: Text(
           isUpperCase ? text.toUpperCase() : text,
@@ -44,7 +41,7 @@ Widget defaultTextButton({
   required String text,
 }) =>
     TextButton(
-      onPressed: (){
+      onPressed: () {
         function();
       },
       child: Text(
@@ -131,7 +128,6 @@ class defaultFormField extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final double radius;
 
-
   const defaultFormField({
     super.key,
     required this.context,
@@ -159,13 +155,12 @@ class defaultFormField extends StatelessWidget {
     this.hintText,
     this.isPassword = false,
     this.inputFormatters,
-    this.textCapitalization = TextCapitalization.words, required this.type,
+    this.textCapitalization = TextCapitalization.words,
+    required this.type,
   });
 
   @override
   Widget build(BuildContext context) {
-
-
     final hasFocus = controller.text.isNotEmpty;
     return TextFormField(
       maxLines: 1,
@@ -186,99 +181,99 @@ class defaultFormField extends StatelessWidget {
       textCapitalization: textCapitalization,
       textAlignVertical: TextAlignVertical.center,
       initialValue: initialValue,
-        decoration: InputDecoration(
+      decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(
           prefix,
         ),
         suffixIcon: suffix != null
             ? IconButton(
-            onPressed: (){suffixPressed!();},
-            icon: Icon(
-            suffix,
-          ),
-        )
+                onPressed: () {
+                  suffixPressed!();
+                },
+                icon: Icon(
+                  suffix,
+                ),
+              )
             : null,
         border: OutlineInputBorder(),
       ),
     );
-
   }
 }
 
-
 Widget buildTaskItem(Map model, context) => Dismissible(
-  key: Key(model['id'].toString()),
-  child: Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Row(
-      children: [
-        CircleAvatar(
-          radius: 40.0,
-          child: Text(
-            '${model['time']}',
-          ),
-        ),
-        SizedBox(
-          width: 20.0,
-        ),
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${model['title']}',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
+      key: Key(model['id'].toString()),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 40.0,
+              child: Text(
+                '${model['time']}',
               ),
-              Text(
-                '${model['date']}',
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${model['title']}',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '${model['date']}',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            IconButton(
+              onPressed: () {
+                AppCubit.get(context).updateData(
+                  status: 'done',
+                  id: model['id'],
+                );
+              },
+              icon: Icon(
+                Icons.check_box,
+                color: Colors.green,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                AppCubit.get(context).updateData(
+                  status: 'archive',
+                  id: model['id'],
+                );
+              },
+              icon: Icon(
+                Icons.archive,
+                color: Colors.black45,
+              ),
+            ),
+          ],
         ),
-        SizedBox(
-          width: 20.0,
-        ),
-        IconButton(
-          onPressed: () {
-            AppCubit.get(context).updateData(
-              status: 'done',
-              id: model['id'],
-            );
-          },
-          icon: Icon(
-            Icons.check_box,
-            color: Colors.green,
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            AppCubit.get(context).updateData(
-              status: 'archive',
-              id: model['id'],
-            );
-          },
-          icon: Icon(
-            Icons.archive,
-            color: Colors.black45,
-          ),
-        ),
-      ],
-    ),
-  ),
-  onDismissed: (direction) {
-    AppCubit.get(context).deleteData(
-      id: model['id'],
+      ),
+      onDismissed: (direction) {
+        AppCubit.get(context).deleteData(
+          id: model['id'],
+        );
+      },
     );
-  },
-);
 
 Widget tasksBuilder({
   required List<Map> tasks,
@@ -315,26 +310,26 @@ Widget tasksBuilder({
     );
 
 Widget myDivider() => Padding(
-  padding: const EdgeInsetsDirectional.only(
-    start: 20.0,
-  ),
-  child: Container(
-    width: double.infinity,
-    height: 1.0,
-    color: Colors.grey[300],
-  ),
-);
+      padding: const EdgeInsetsDirectional.only(
+        start: 20.0,
+      ),
+      child: Container(
+        width: double.infinity,
+        height: 1.0,
+        color: Colors.grey[300],
+      ),
+    );
 
 void navigateAndFinish(
-    context,
-    widget,
-    ) =>
+  context,
+  widget,
+) =>
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
       ),
-          (route) {
+      (route) {
         return false;
       },
     );
@@ -375,10 +370,10 @@ Color chooseToastColor(ToastStates state) {
 }
 
 Widget buildListProduct(
-    model,
-    context, {
-      bool isOldPrice = true,
-    }) =>
+  model,
+  context, {
+  bool isOldPrice = true,
+}) =>
     Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -449,8 +444,7 @@ Widget buildListProduct(
                         ),
                       Spacer(),
                       IconButton(
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         icon: CircleAvatar(
                           radius: 15.0,
                           child: Icon(
@@ -467,5 +461,11 @@ Widget buildListProduct(
             ),
           ],
         ),
+      ),
+    );
+void navigateTo(context, widget) => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => widget,
       ),
     );
