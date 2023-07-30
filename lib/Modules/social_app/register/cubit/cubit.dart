@@ -11,13 +11,13 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
 
   static SocialRegisterCubit get(context) => BlocProvider.of(context);
 
-  void userRegister({
-    String? FirstName,
-    String? LastName,
-    String? email,
-    String? password,
-    String? phone,
-  }) {
+  void userRegister(
+      {String? name,
+      String? email,
+      String? password,
+      String? phone,
+      String? image,
+      String? bio}) {
     print('hello');
 
     emit(SocialRegisterLoadingState());
@@ -29,27 +29,25 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     )
         .then((value) {
       userCreate(
-        uId: value.user!.uid,
-        phone: phone!,
-        email: email,
-        FirstName: FirstName!,
-        LastName: LastName!,
-      );
+          uId: value.user!.uid,
+          phone: phone!,
+          email: email,
+          name: name!,
+          image: image!);
     }).catchError((error) {
       emit(SocialRegisterErrorState(error.toString()));
     });
   }
 
   void userCreate({
-    required String FirstName,
-    required String LastName,
     required String email,
     required String phone,
     required String uId,
+    required String name,
+    required String image,
   }) {
     SocialUserModel model = SocialUserModel(
-      FirstName: FirstName,
-      LastName: LastName,
+      name: name,
       email: email,
       phone: phone,
       uId: uId,

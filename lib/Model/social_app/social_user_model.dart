@@ -1,6 +1,5 @@
 class SocialUserModel {
-  String? FirstName;
-  String? LastName;
+  String? name;
   String? email;
   String? phone;
   String? uId;
@@ -17,13 +16,14 @@ class SocialUserModel {
       this.bio,
       this.image,
       this.cover,
-      this.FirstName,
-      this.LastName});
+      this.name});
 
   SocialUserModel.fromJson(Map<String, dynamic> json) {
+    image = json['image'];
+    cover = json['cover'];
+    bio = json['bio'];
+    name = json['name'];
     email = json['email'];
-    FirstName = json['FirstName'];
-    LastName = json['LastName'];
     phone = json['phone'];
     uId = json['uId'];
     isEmailVerified = json['isEmailVerified'];
@@ -31,8 +31,7 @@ class SocialUserModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'FirstName': FirstName,
-      'LastName': LastName,
+      'name': name,
       'email': email,
       'phone': phone,
       'isEmailVerified': isEmailVerified,
